@@ -5,7 +5,7 @@
 #   $1 - ssh address with options(if needed)
 #
 # Usage example:
-# ssh_yes "-p22 user@localhost"
+#   ssh_yes "-p22 user@localhost"
 
 function ssh_yes () {
 expect << EOF

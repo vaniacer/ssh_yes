@@ -2,7 +2,7 @@
 
 Tired of answering 'yes' every time when you connect to a new server via ssh?<br>
 This smal expect script will help you!) If connecting first time it'll send 'yes' on ssh's request.<br>
-But firs expect have to be installed:<br>
+But first expect have to be installed:<br>
 
 <pre>
     sudo apt-get install -y expect
