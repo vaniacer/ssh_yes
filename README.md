@@ -7,7 +7,6 @@ But firs expect have to be installed:
     sudo apt-get install -y expect
 
 It's already wraped in bash function ssh_yes so you can insert it in your existing shell scrips.
-
 Function accepts ssh address via 1st option:
     $1 - ssh address with parameters(if needed)
 
