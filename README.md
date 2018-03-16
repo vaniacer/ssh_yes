@@ -13,7 +13,7 @@ It's already wraped in bash function <b>ssh_yes</b> so you can insert it in your
 <pre>
 function ssh_yes () {
 expect << EOF
-spawn ssh $1 $2
+spawn ssh $1
 expect {
     "(yes/no)?" {
         send "yes\n"
