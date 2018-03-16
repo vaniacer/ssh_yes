@@ -9,11 +9,11 @@ But firs expect have to be installed:<br>
 </pre>
 
 It's already wraped in bash function ssh_yes so you can insert it in your existing shell scrips.<br>
-Function accepts ssh address via 1st option:<br>
-    $1 - ssh address with parameters(if needed)
+Function accepts ssh address via 1st option, usage example:<br>
 
-Usage example:<br>
+<pre>
     ssh_yes "-p22 user@localhost"
+</pre>
 
 <pre>
 function ssh_yes () {
