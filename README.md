@@ -8,12 +8,7 @@ But firs expect have to be installed:<br>
     sudo apt-get install -y expect
 </pre>
 
-It's already wraped in bash function ssh_yes so you can insert it in your existing shell scrips.<br>
-Function accepts ssh address via 1st option, usage example:<br>
-
-<pre>
-    ssh_yes "-p22 user@localhost"
-</pre>
+It's already wraped in bash function <b>ssh_yes</b> so you can insert it in your existing shell scrips.<br>
 
 <pre>
 function ssh_yes () {
@@ -33,5 +28,11 @@ expect {
 exit
 EOF
 }
+</pre>
+
+Function accepts ssh address via 1st option, usage example:<br>
+
+<pre>
+    ssh_yes "-p22 user@localhost"
 </pre>
 
