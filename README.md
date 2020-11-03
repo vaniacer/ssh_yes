@@ -13,9 +13,11 @@ It's already wraped in bash function <b>ssh_yes</b> so you can insert it in your
 <pre>
 ssh_yes() {
 assword='
-    "assword:" { exit }
+    "assword:" { %s }
     "$ "       { send "exit\n" }
 '
+[[ $2 ]] && pass="send \"$2\n\"" || pass="exit"
+printf -v assword "$assword" "$pass"
 expect <<  EOF
 spawn  ssh $1
 expect {
