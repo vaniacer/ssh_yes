@@ -1,26 +1,24 @@
 #!/bin/bash
-
 # If connecting first time send 'yes' on ssh's request.
 # Expect must be installed on server. Options:
-#   $1 - ssh address with parameters(if needed)
+#  $1 - ssh address with parameters(if needed)
 #
 # Usage example:
 #   ssh_yes "-p22 user@localhost"
 
-function ssh_yes () {
-expect << EOF
-spawn ssh $1
-expect {
-    "(yes/no)?" {
-        send "yes\n"
-        expect {
-            "assword:" { exit }
-            "$ "       { send "exit\n" }
-        }
-    }
+ssh_yes() {
+assword='
     "assword:" { exit }
     "$ "       { send "exit\n" }
+'
+expect <<  EOF
+spawn  ssh $1
+expect {
+    "yes/no" {
+        send "yes\n"
+        expect { $assword }
+    }
+    $assword
 }
-exit
 EOF
 }

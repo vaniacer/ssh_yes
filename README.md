@@ -11,21 +11,20 @@ But first expect have to be installed:<br>
 It's already wraped in bash function <b>ssh_yes</b> so you can insert it in your existing shell scrips.<br>
 
 <pre>
-function ssh_yes () {
-expect << EOF
-spawn ssh $1
-expect {
-    "(yes/no)?" {
-        send "yes\n"
-        expect {
-            "assword:" { exit }
-            "$ "       { send "exit\n" }
-        }
-    }
+ssh_yes() {
+assword='
     "assword:" { exit }
     "$ "       { send "exit\n" }
+'
+expect <<  EOF
+spawn  ssh $1
+expect {
+    "yes/no" {
+        send "yes\n"
+        expect { $assword }
+    }
+    $assword
 }
-exit
 EOF
 }
 </pre>
