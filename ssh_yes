@@ -1,26 +1,13 @@
 #!/bin/bash
-# If connecting first time send 'yes' on ssh's request.
-# Expect must be installed on server. Options:
-#  $1 - ssh address with parameters(if needed)
+# If connecting first to server this will remove
+# annoying question to add server to known_hosts
 #
 # Usage example:
-#   ssh_yes "-p22 user@localhost"
+#   ssh_yes 192.168.0.1 [/my/path/to/known_hosts|default is ~/.ssh/known_hosts]
 
 ssh_yes() {
-assword='
-    "assword:" { %s }
-    "$ "       { send "exit\n" }
-'
-[[ $2 ]] && pass="send \"$2\n\"" || pass="exit"
-printf -v assword "$assword" "$pass"
-expect <<  EOF
-spawn  ssh $1
-expect {
-    "yes/no" {
-        send "yes\n"
-        expect { $assword }
-    }
-    $assword
-}
-EOF
+    local target=$1
+    local knwhosts=${2:-~/.ssh/known_hosts}
+    local fprint=($(ssh-keyscan -H "$target" 2>/dev/null))
+    grep -q "${fprint[2]}" "$knwhosts" 2>/dev/null || echo "${fprint[@]}" >> "$knwhosts"
 }
