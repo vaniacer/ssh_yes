@@ -8,6 +8,6 @@
 ssh_yes() {
     local target=$1
     local knwhosts=${2:-~/.ssh/known_hosts}
-    local fprint=($(ssh-keyscan -H "$target" 2>/dev/null))
+    local fprint=($(ssh-keyscan -H "$target" 2>/dev/null)) || return 1
     grep -q "${fprint[2]}" "$knwhosts" 2>/dev/null || echo "${fprint[@]}" >> "$knwhosts"
 }

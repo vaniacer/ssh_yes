@@ -1,39 +1,23 @@
 # ssh_yes
 
 Tired of answering 'yes' every time when you connect to a new server via ssh?<br>
-This smal expect script will help you!) If connecting first time it'll send 'yes' on ssh's request.<br>
-But first expect have to be installed:<br>
-
-<pre>
-    sudo apt-get install -y expect
-</pre>
+This small script will help you!)
 
 It's already wraped in bash function <b>ssh_yes</b> so you can insert it in your existing shell scrips.<br>
 
 <pre>
 ssh_yes() {
-assword='
-    "assword:" { %s }
-    "$ "       { send "exit\n" }
-'
-[[ $2 ]] && pass="send \"$2\n\"" || pass="exit"
-printf -v assword "$assword" "$pass"
-expect <<  EOF
-spawn  ssh $1
-expect {
-    "yes/no" {
-        send "yes\n"
-        expect { $assword }
-    }
-    $assword
-}
-EOF
+    local target=$1
+    local knwhosts=${2:-~/.ssh/known_hosts}
+    local fprint=($(ssh-keyscan -H "$target" 2>/dev/null)) || return 1
+    grep -q "${fprint[2]}" "$knwhosts" 2>/dev/null || echo "${fprint[@]}" >> "$knwhosts"
 }
 </pre>
 
-Function accepts ssh address via 1st option, usage example:<br>
+Function accepts server's IP address via 1st option, and path to known_hosts as second if
+it's different from default, usage example:<br>
 
 <pre>
-    ssh_yes "-p22 user@localhost"
+    ssh_yes 192.168.0.1 [/my/path/to/known_hosts|default is ~/.ssh/known_hosts]
 </pre>
 
